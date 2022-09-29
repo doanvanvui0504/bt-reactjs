@@ -1,0 +1,15 @@
+.wrapper {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 40px;
+}
+
+input + input {
+  margin-top: 10px;
+}
+
+button + button {
+  margin-left: 8px;
+}
