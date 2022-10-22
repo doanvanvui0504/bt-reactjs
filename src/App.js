@@ -1,10 +1,10 @@
 import './App.css';
-import ManageBooks from './components/ManageBooks/ManageBooks';
+import MailForm from './components/MailForm/MailForm';
 
 function App() {
   return (
     <div className='App'>
-      <ManageBooks />
+      <MailForm />
     </div>
   );
 }
