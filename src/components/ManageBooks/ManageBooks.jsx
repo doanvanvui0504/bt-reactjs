@@ -50,9 +50,6 @@ const ManageBooks = () => {
       });
       setIsEdit(false);
     }
-    inputTitleRef.current.value = '';
-    inputQuantityRef.current.value = '';
-    inputTitleRef.current.focus();
   };
 
   return (
@@ -61,42 +58,48 @@ const ManageBooks = () => {
       <Formik
         initialValues={{ title: '', quantity: '' }}
         validate={handleValidate}
-        onSubmit={IHandleSubmit}
+        onSubmit={(values, { resetForm }) => {
+          IHandleSubmit(values);
+          resetForm();
+          inputTitleRef.current.value = '';
+          inputQuantityRef.current.value = '';
+        }}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label style={{ display: 'block' }}>Tiêu đề</label>
-              <input
-                ref={inputTitleRef}
-                type='text'
-                name='title'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-              />
-              <h5 className='error-message'>{errors.title && touched.title && errors.title}</h5>
-            </div>
-            <div>
-              <label style={{ display: 'block' }}>Số lượng</label>
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
+          return (
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label style={{ display: 'block' }}>Tiêu đề</label>
+                <input
+                  ref={inputTitleRef}
+                  type='text'
+                  name='title'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                />
+                <h5 className='error-message'>{errors.title && touched.title && errors.title}</h5>
+              </div>
+              <div>
+                <label style={{ display: 'block' }}>Số lượng</label>
 
-              <input
-                ref={inputQuantityRef}
-                type='number'
-                name='quantity'
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-              />
-              <h5 className='error-message'>
-                {errors.quantity && touched.quantity && errors.quantity}
-              </h5>
-            </div>
-            <button type='submit'>Submit</button>
-          </form>
-        )}
+                <input
+                  ref={inputQuantityRef}
+                  type='number'
+                  name='quantity'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                />
+                <h5 className='error-message'>
+                  {errors.quantity && touched.quantity && errors.quantity}
+                </h5>
+              </div>
+              <button type='submit'>Submit</button>
+            </form>
+          );
+        }}
       </Formik>
-
       <h1>List Book</h1>
       <table>
         <thead>
