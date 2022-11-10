@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const User = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
@@ -19,9 +19,21 @@ const User = () => {
     getUser();
   }, []);
 
+  const handleClick = () => {
+    navigate('/user/add');
+  };
+
   return (
     <div className='user'>
-      {users.length > 0 && users.map((item, index) => <li key={index}>{item.name}</li>)}
+      <h3>Users</h3>
+      {users.length > 0 &&
+        users.map((item, index) => (
+          <li key={index}>
+            <Link to={`/user/${item.id}`}>{item.name}</Link>
+          </li>
+        ))}
+      <br />
+      <button onClick={handleClick}>Create</button>
     </div>
   );
 };
