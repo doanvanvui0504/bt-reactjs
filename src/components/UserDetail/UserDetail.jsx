@@ -4,17 +4,21 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const UserDetail = () => {
   const [user, setUser] = useState({ id: 0, name: '', birthday: '' });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     const getUser = async () => {
+      setLoading(true);
       try {
         const res = await axios.get(`http://localhost:3000/users/${id}`);
         setUser(res.data);
+        setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
 
@@ -39,23 +43,27 @@ const UserDetail = () => {
   return (
     <div className='user-detail'>
       <h3>UserDetail</h3>
-      <form>
-        <label>Id</label>
-        <input type='number' name='id' value={user.id} onChange={(e) => handleIdChange(e)} />
-        <br />
-        <label>Name</label>
-        <input type='text' name='name' value={user.name} onChange={(e) => handleIdChange(e)} />
-        <br />
-        <label>Birthday</label>
-        <input
-          type='date'
-          name='birthday'
-          value={user.birthday}
-          onChange={(e) => handleIdChange(e)}
-        />
-        <br />
-        <button onClick={handleSubmit}>Submit</button>
-      </form>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <form>
+          <label>Id</label>
+          <input type='number' name='id' value={user.id} onChange={(e) => handleIdChange(e)} />
+          <br />
+          <label>Name</label>
+          <input type='text' name='name' value={user.name} onChange={(e) => handleIdChange(e)} />
+          <br />
+          <label>Birthday</label>
+          <input
+            type='date'
+            name='birthday'
+            value={user.birthday}
+            onChange={(e) => handleIdChange(e)}
+          />
+          <br />
+          <button onClick={handleSubmit}>Submit</button>
+        </form>
+      )}
     </div>
   );
 };
